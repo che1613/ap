@@ -30,3 +30,26 @@ This is a simple FastAPI application that allows users to:
     "file_id": "123e4567-e89b-12d3-a456-426614174000",
     "filename": "example.jpg"
   }
+Check File Status
+GET /status/{file_id}/
+
+Path Parameter:
+
+file_id: Unique ID of the file.
+- **Response Example:**
+  ```json
+
+
+
+{
+  "filename": "example.jpg",
+  "status": "uploaded"
+}
+3. Retrieve File
+GET /files/{file_id}/
+
+Path Parameter:
+
+file_id: Unique ID of the file.
+Response: Returns the file as a download.
+

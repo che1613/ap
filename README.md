@@ -1,55 +1,103 @@
 # FastAPI File Upload API
 
-This is a simple FastAPI application that allows users to:
-1. Upload image files.
-2. Check the status of uploaded files.
-3. Retrieve uploaded files by their unique ID.
-
----
+This is a simple FastAPI application that provides endpoints for uploading image files, checking their upload status, and retrieving the files.
 
 ## Features
 
-- Uploads and saves image files.
-- Validates that only image files can be uploaded.
-- Provides endpoints to check file status and retrieve files.
-- Stores files in the `uploads/` directory.
+- **File Upload**: Upload image files and store them on the server.
+- **Status Check**: Check the upload status of a file by its unique identifier (UUID).
+- **File Retrieval**: Retrieve and download uploaded files using their UUID.
 
----
+
+
+## Installation
+
+Follow these steps to set up the project locally:
+
+### 1. Clone the Repository
+
+```bash
+git clone < >
+cd <ap>
+```
+
+### 2. Create a Virtual Environment
+
+```bash
+python -m venv venv
+source venv/bin/activate  # On Linux/Mac
+venv\Scripts\activate   # On Windows
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run the Application
+
+```bash
+uvicorn main:app --reload
+```
+
+The application will be available at `http://127.0.0.1:8000`.
 
 ## Endpoints
 
-### 1. Upload File
+### 1. Upload a File
+
 **POST** `/upload/`
 
-- **Request Body:** 
-  - File: An image file to upload.
-  
-- **Response Example:**
-  ```json
-  {
-    "file_id": "123e4567-e89b-12d3-a456-426614174000",
-    "filename": "example.jpg"
-  }
-Check File Status
-GET /status/{file_id}/
+Upload an image file to the server.
 
-Path Parameter:
+#### Request
+- **Headers**: `Content-Type: multipart/form-data`
+- **Body**: File input field named `file`
 
-file_id: Unique ID of the file.
-- **Response Example:**
-  ```json
-
-
-
+#### Response
+```json
 {
-  "filename": "example.jpg",
+  "file_id": "<UUID>",
+  "filename": "<original_filename>"
+}
+```
+
+### 2. Check File Status
+
+**GET** `/status/{file_id}/`
+
+Check the upload status of a file.
+
+#### Response
+- **200 OK**:
+```json
+{
+  "filename": "<original_filename>",
   "status": "uploaded"
 }
-3. Retrieve File
-GET /files/{file_id}/
+```
+- **404 Not Found**:
+```json
+{
+  "detail": "File not found."
+}
+```
 
-Path Parameter:
+### 3. Retrieve a File
 
-file_id: Unique ID of the file.
-Response: Returns the file as a download.
+**GET** `/files/{file_id}/`
+
+Download an uploaded file.
+
+#### Response
+- **200 OK**: Returns the file as a response.
+- **404 Not Found**:
+```json
+{
+  "detail": "File not found."
+}
+```
+
+
 
